@@ -1,8 +1,9 @@
-import { useNavigate, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Missing = () => {
   const navigate = useNavigate();
+  const location = useLocation()
+  console.log('location.state',location.state?.from)
 
 //   設定過一秒後回首頁
 //   useEffect(() => {
