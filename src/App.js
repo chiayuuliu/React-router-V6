@@ -8,6 +8,9 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import Layout from "./Layout";
 
+// 登入表單驗證練習
+import Register from "./Register";
+
 function App() {
   const [posts, setPosts] = useState([
     {
@@ -75,8 +78,8 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<Layout search={search} setSearch={setSearch} />}>
-
+        element={<Layout search={search} setSearch={setSearch} />}
+      >
         <Route index element={<Home posts={searchResults} />} />
         {/* 根目錄同樣是以post 開頭的可以用巢狀方式寫路由 */}
         <Route path="post">
@@ -99,8 +102,8 @@ function App() {
             element={<PostPage posts={posts} handleDelete={handleDelete} />}
           />
         </Route>
-
-        <Route path="about" element={<About />} />        
+        <Route path="about" element={<About />} />
+        <Route path="register" element={<Register />} />
         <Route path="*" element={<Missing />} />
       </Route>
     </Routes>
