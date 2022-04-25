@@ -10,6 +10,7 @@ import Layout from "./Layout";
 
 // 登入表單驗證練習
 import Register from "./Register";
+import Login from "./Login";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -104,6 +105,7 @@ function App() {
         </Route>
         <Route path="about" element={<About />} />
         <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
         <Route path="*" element={<Missing />} />
       </Route>
     </Routes>

@@ -296,7 +296,8 @@ form {
 
 a,
 a:visited {
-  color: #fff;
+  color: darkblue;
+  text-decoration: none;
 }
 
 input[type="text"],
@@ -323,9 +324,12 @@ button {
 }
 button:hover {
   background-color: rgb(23, 145, 185);
-  color: white;
-  letter-spacing: 1px;
-  font-weight: 600;
+}
+/* disable css 設定方式 */
+button:disabled,
+button[disabled] {
+  background-color: rgba(169, 169, 169, 0.5);
+  cursor: auto;
 }
 
 .instructions {
