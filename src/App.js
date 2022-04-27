@@ -7,10 +7,22 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import Layout from "./Layout";
+import LayoutProtected from "./LayoutProtected";
 
 // 登入表單驗證練習
 import Register from "./Register";
 import Login from "./Login";
+
+// 保護路由練習
+import LinkPage from "./component/LinkPage";
+import Editor from "./component/Editor";
+import Admin from "./component/Admin";
+import Lounge from "./component/Lounge";
+import Unauthorized from "./component/Unauthorized";
+import HomeProtect from "./component/HomeProtect";
+import LoginProtect from "./component/LoginProtect";
+// 權限
+import RequireAuth from "./component/RequireAuth";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -77,6 +89,7 @@ function App() {
 
   return (
     <Routes>
+      {/* 在這個Layout 底下，頁面的樣子都會長成跟layout 裡的架構一樣 */}
       <Route
         path="/"
         element={<Layout search={search} setSearch={setSearch} />}
@@ -106,8 +119,26 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="*" element={<Missing />} />
       </Route>
+
+      {/* 保護機制路由 */}
+      <Route path="/protect" element={<LayoutProtected />}>
+        {/* Public Routes */}
+        <Route path="login" element={<LoginProtect />} />
+        <Route path="register" element={<Register />} />
+        <Route path="linkpage" element={<LinkPage />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
+
+        {/* 私人路由 */}
+        {/* require Auth 裡面會設定 看有沒有auth user資料，有的話就先是以下component，沒有資料的話就轉向登入頁 */}
+        <Route element={<RequireAuth />}>
+          <Route index element={<HomeProtect />} />
+          <Route path="editor" element={<Editor />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="lounge" element={<Lounge />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<Missing />} />
     </Routes>
   );
 }

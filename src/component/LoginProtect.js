@@ -1,12 +1,20 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import useAuth from "./hook/useAuth";
+import useAuth from "./../hook/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 // 用Context 的寫法
 // import AuthContext from "./context/AuthProvider";
 
-const Login = () => {
+const LoginProtect = () => {
   // 從AuthContext裡面拿setAuth，AuthContext裡面有AuthProvider，在index,js 外層包了<AuthProvider>，所以裡面的元件都可以取用Provider裡的資料
   // const { setAuth } = useContext(AuthContext);
   const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  // 如果有來自上一頁的紀錄，就記到from變數裡，沒有就回首頁
+  // location 會記錄現在正在的URL，state 裡面會紀錄from.pathname(從哪頁來的資訊)，
+  const from = location.state?.from?.pathname || "/protect";
+
+  // console.log("location", location);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -31,9 +39,10 @@ const Login = () => {
     // 這裡會設定Auth
     setAuth({ user, pwd });
     console.log("user, pwd", user, pwd);
-    setSuccess(true);
+    // setSuccess(true);
     setUser("");
     setPwd("");
+    navigate(from, { replace: true });
   };
   return (
     <>
@@ -42,7 +51,7 @@ const Login = () => {
           <h1>You are logged in !</h1>
           <br />
           <p>
-            <a href="/"> Go to Home</a>
+            <a href="/protect"> Go to Home</a>
           </p>
         </section>
       ) : (
@@ -94,4 +103,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginProtect;
