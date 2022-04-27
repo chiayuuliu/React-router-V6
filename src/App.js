@@ -24,7 +24,16 @@ import LoginProtect from "./component/LoginProtect";
 // 權限
 import RequireAuth from "./component/RequireAuth";
 
+// 開關燈切換練習
+import Form from "./component/Form";
+import { createContext } from "react";
+
+export const ThemeContext = createContext(null);
+
 function App() {
+  // 開關燈設計，預設一開始是light
+  const [theme, setTheme] = useState("light");
+
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -88,58 +97,63 @@ function App() {
   };
 
   return (
-    <Routes>
-      {/* 在這個Layout 底下，頁面的樣子都會長成跟layout 裡的架構一樣 */}
-      <Route
-        path="/"
-        element={<Layout search={search} setSearch={setSearch} />}
-      >
-        <Route index element={<Home posts={searchResults} />} />
-        {/* 根目錄同樣是以post 開頭的可以用巢狀方式寫路由 */}
-        <Route path="post">
-          {/*  index 表示url 是/post 的畫面(post 的根目錄) */}
-          <Route
-            index
-            element={
-              <NewPost
-                handleSubmit={handleSubmit}
-                postTitle={postTitle}
-                setPostTitle={setPostTitle}
-                postBody={postBody}
-                setPostBody={setPostBody}
-              />
-            }
-          />
-          {/* 因為根目錄是post 所以後面只要接:id即可 */}
-          <Route
-            path=":id"
-            element={<PostPage posts={posts} handleDelete={handleDelete} />}
-          />
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Routes>
+        {/* 在這個Layout 底下，頁面的樣子都會長成跟layout 裡的架構一樣 */}
+        <Route
+          path="/"
+          element={<Layout search={search} setSearch={setSearch} />}
+        >
+          <Route index element={<Home posts={searchResults} />} />
+          {/* 根目錄同樣是以post 開頭的可以用巢狀方式寫路由 */}
+          <Route path="post">
+            {/*  index 表示url 是/post 的畫面(post 的根目錄) */}
+            <Route
+              index
+              element={
+                <NewPost
+                  handleSubmit={handleSubmit}
+                  postTitle={postTitle}
+                  setPostTitle={setPostTitle}
+                  postBody={postBody}
+                  setPostBody={setPostBody}
+                />
+              }
+            />
+            {/* 因為根目錄是post 所以後面只要接:id即可 */}
+            <Route
+              path=":id"
+              element={<PostPage posts={posts} handleDelete={handleDelete} />}
+            />
+          </Route>
+          <Route path="about" element={<About />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
         </Route>
-        <Route path="about" element={<About />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-      </Route>
+        {/* 保護機制路由 */}
+        <Route path="/protect" element={<LayoutProtected />}>
+          {/* Public Routes */}
+          <Route path="login" element={<LoginProtect />} />
+          <Route path="register" element={<Register />} />
+          <Route path="linkpage" element={<LinkPage />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
 
-      {/* 保護機制路由 */}
-      <Route path="/protect" element={<LayoutProtected />}>
-        {/* Public Routes */}
-        <Route path="login" element={<LoginProtect />} />
-        <Route path="register" element={<Register />} />
-        <Route path="linkpage" element={<LinkPage />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
-
-        {/* 私人路由 */}
-        {/* require Auth 裡面會設定 看有沒有auth user資料，有的話就先是以下component，沒有資料的話就轉向登入頁 */}
-        <Route element={<RequireAuth />}>
-          <Route index element={<HomeProtect />} />
-          <Route path="editor" element={<Editor />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="lounge" element={<Lounge />} />
+          {/* 私人路由 */}
+          {/* require Auth 裡面會設定 看有沒有auth user資料，有的話就先是以下component，沒有資料的話就轉向登入頁 
+        因為根目錄就是需要登入，所以會直接被跳轉到登入頁*/}
+          <Route element={<RequireAuth />}>
+            {/* 以下元件不用多做設定 */}
+            <Route index element={<HomeProtect />} />
+            <Route path="editor" element={<Editor />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="lounge" element={<Lounge />} />
+          </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<Missing />} />
-    </Routes>
+        {/* 開關燈練習 */}
+        <Route path="switch" element={<Form />}></Route>
+        <Route path="*" element={<Missing />} />
+      </Routes>
+    </ThemeContext.Provider>
   );
 }
 

@@ -1,12 +1,13 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hook/useAuth";
 
+// 這裡的RequireAuth 是layout 的一種，
 const RequireAuth = () => {
   const { auth } = useAuth();
   const location = useLocation();
 
   //   如果有user 資料表示有登入，有的話就呈現outlet 元件，沒有登入的話轉向登入頁面，並傳遞從哪裡來的資料到login頁面
-
+  console.log('auth', useAuth() )
   return auth?.user ? (
     <Outlet />
   ) : (
