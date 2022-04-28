@@ -25,6 +25,8 @@ import LoginProtect from "./component/LoginProtect";
 import RequireAuth from "./component/RequireAuth";
 // useReducer 練習
 import Reducer from "./UseReducer/Reducer";
+// useRef 練習
+import UseRef from "./useRef/UseRef";
 
 // 開關燈切換練習
 import Form from "./component/Form";
@@ -154,6 +156,8 @@ function App() {
         <Route path="switch" element={<Form />}></Route>
         {/* useReducer */}
         <Route path="reducer" element={<Reducer />} />
+        {/* useRef */}
+        <Route path="useref" element={<UseRef />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </ThemeContext.Provider>
