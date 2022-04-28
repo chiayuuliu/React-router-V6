@@ -9,3 +9,5 @@
 ## 用 useContext、自製 hook useAuth 做登入狀態管理
 
 ### 用身份做判斷(未實作) 參考影片：https://www.youtube.com/watch?v=oUZjO00NkhY&list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&ab_channel=DaveGray
+
+# useReducer 範例練習

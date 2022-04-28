@@ -23,11 +23,12 @@ import HomeProtect from "./component/HomeProtect";
 import LoginProtect from "./component/LoginProtect";
 // 權限
 import RequireAuth from "./component/RequireAuth";
+// useReducer 練習
+import Reducer from "./UseReducer/Reducer";
 
 // 開關燈切換練習
 import Form from "./component/Form";
 import { createContext } from "react";
-
 export const ThemeContext = createContext(null);
 
 function App() {
@@ -151,6 +152,8 @@ function App() {
         </Route>
         {/* 開關燈練習 */}
         <Route path="switch" element={<Form />}></Route>
+        {/* useReducer */}
+        <Route path="reducer" element={<Reducer />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </ThemeContext.Provider>
